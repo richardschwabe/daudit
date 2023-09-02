@@ -1,0 +1,4 @@
+
+class BaseModule:
+    def run():
+        ...
