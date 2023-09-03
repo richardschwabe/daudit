@@ -1,8 +1,11 @@
 from daudit.lib.models.BaseModule import BaseModule
 
 class CheckSSHModule(BaseModule):
-    def run(self):
-        print("CheckSSH")
+    title = "SSH Enabled"
+    description = "Should not run SSH service"
+
+    def check(self):
+        ...
 
 
 

@@ -1,5 +1,8 @@
 import importlib
 import sys
+
+import docker
+
 import daudit.settings as settings
 from daudit.lib.console import console
 class DAudit:
@@ -7,9 +10,17 @@ class DAudit:
         """Entrypoint for DAudit
         """
         self.discover_modules()
+
+        if not settings.ENABLED_MODULES:
+            console.print('[red]No modules found.[/red]')
+            return
+
+        # create a docker client
+        client = docker.DockerClient(base_url='tcp://127.0.0.1:2375')
+
         self.load_modules()
         for module in settings.LOADED_MODULES:
-            module.loader().run()
+            module.loader(client).run()
 
     def discover_modules(self) -> None:
         """Goes over all the folders for possible modules locations and then
