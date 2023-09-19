@@ -1,11 +1,12 @@
 from daudit.lib.console import console
 from daudit.lib.models.Issue import Issue
-class BaseModule:
 
+
+class BaseModule:
     client = None
-    title : str = ""
+    title: str = ""
     description: str = ""
-    _issues : list[Issue] = list()
+    _issues: list[Issue] = list()
 
     def __init__(self, docker_client) -> None:
         self.client = docker_client
@@ -23,7 +24,14 @@ class BaseModule:
     def info(self, msg):
         console.print(f"[blue]{msg}[/blue]")
 
-    def add_issue(self, label: str="", description: str="", cwe : str="", affected_items: list[str] = (), references: list[str] = ()) -> None:
+    def add_issue(
+        self,
+        label: str = "",
+        description: str = "",
+        cwe: str = "",
+        affected_items: list[str] = (),
+        references: list[str] = (),
+    ) -> None:
         new_issue = Issue()
         new_issue.label = label
         new_issue.description = description
@@ -47,6 +55,6 @@ class BaseModule:
         raise NotImplementedError
 
     def run(self):
-       self._print_module_label()
-       self.check()
-       self._print_results()
+        self._print_module_label()
+        self.check()
+        self._print_results()
